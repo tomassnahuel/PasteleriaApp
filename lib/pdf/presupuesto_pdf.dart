@@ -216,11 +216,13 @@ import 'package:presupuestoapp/data/models/item_presupuesto.dart';
 
 class PresupuestoPdf {
   // 🎀 Colores base
-  static const rosaFuerte = PdfColor.fromInt(0xFFE91E63);
+  /*static const rosaFuerte = PdfColor.fromInt(0xFFE91E63);
   static const rosaClaro = PdfColor.fromInt(0xFFF8BBD0);
   static const rosaMuyClaro = PdfColor.fromInt(0xFFFCE4EC);
-  
-
+  */
+static const rosaFuerte = PdfColor.fromInt(0xFFD86A8B);
+static const rosaClaro = PdfColor.fromInt(0xFFF4C6D2);
+static const rosaMuyClaro = PdfColor.fromInt(0xFFFDF1F4);
 
   static Future<pw.Document> generar({
     required String negocio,
@@ -585,9 +587,13 @@ static pw.Widget _tabla(
             ),
 
             // Línea separadora rosa
-            pw.Container(
+            /*pw.Container(
               height: 2,
               color: rosaClaro,
+            ),*/
+            pw.Container(
+              height: 1,
+              color: rosaMuyClaro,
             ),
           ],
         );
@@ -598,7 +604,7 @@ static pw.Widget _tabla(
       // ======================
       // TOTAL
       // ======================
-      pw.Row(
+      /*pw.Row(
         children: [
           pw.Spacer(flex: 5),
           _cell('TOTAL', flex: 2, font: fontBold, align: pw.TextAlign.right),
@@ -609,7 +615,35 @@ static pw.Widget _tabla(
             align: pw.TextAlign.right,
           ),
         ],
+      ),*/
+      pw.Container(
+  padding: const pw.EdgeInsets.symmetric(vertical: 10),
+  decoration: pw.BoxDecoration(
+    border: pw.Border(
+      top: pw.BorderSide(
+        color: rosaClaro,
+        width: 2,
       ),
+    ),
+  ),
+  child: pw.Row(
+    children: [
+      pw.Spacer(flex: 5),
+      _cell(
+        'TOTAL',
+        flex: 2,
+        font: fontBold,
+        align: pw.TextAlign.right,
+      ),
+      _cell(
+        '\$${total.toStringAsFixed(2)}',
+        flex: 2,
+        font: fontBold,
+        align: pw.TextAlign.right,
+      ),
+    ],
+  ),
+),
     ],
   );
 }

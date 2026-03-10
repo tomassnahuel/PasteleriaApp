@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'ui/screens/home_screen.dart';
-
-
+import 'ui/theme/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,9 +11,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      title: 'Presupuesto Pastelería',
+      theme: AppTheme.lightTheme,
+      home: const HomeScreen(),
     );
   }
 }
