@@ -7,80 +7,10 @@ import 'package:presupuestoapp/ui/screens/insumos_screen.dart';
 import 'package:presupuestoapp/ui/screens/recetas_screen.dart';
 import 'package:presupuestoapp/ui/theme/app_theme.dart';
 
-/// Pantalla principal: menú de navegación con tarjetas claras.
-/// Jerarquía visual: iconos en contenedores, títulos legibles, áreas de toque amplias.
+/// Pantalla principal ; Jerarquia visual 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-/*
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: const Text('Presupuesto Pastelería'),
-        backgroundColor: AppColors.surface,
-      ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.md),
-          children: [
-            const SizedBox(height: AppSpacing.sm),
-            AppMenuCard(
-              title: 'Insumos',
-              icon: Icons.inventory_2_outlined,
-              iconColor: AppColors.primary,
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const InsumosScreen()),
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            AppMenuCard(
-              title: 'Recetas',
-              icon: Icons.menu_book_outlined,
-              iconColor: AppColors.secondaryDark,
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const RecetasScreen()),
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            AppMenuCard(
-              title: 'Cálculo de costos',
-              icon: Icons.calculate_outlined,
-              iconColor: AppColors.accent,
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const CalculoCostosScreen()),
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            AppMenuCard(
-              title: 'Historial de costos',
-              icon: Icons.history,
-              iconColor: AppColors.primaryLight,
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const HistorialCalculosScreen()),
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            AppMenuCard(
-              title: 'Generar presupuesto',
-              icon: Icons.picture_as_pdf_outlined,
-              iconColor: AppColors.secondary,
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const GenerarPresupuestoScreen()),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-*/
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

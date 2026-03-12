@@ -16,17 +16,13 @@ class DetalleCalculoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   /* final detalle = jsonDecode(calculo.detalleJson);*/
+// Parseo Json
    Map<String, dynamic> detalle = {};
 
       try {
         detalle = jsonDecode(calculo.detalleJson);
       } catch (_) {}
-/*
-    final recetas = detalle['recetas'] as List<dynamic>;
-    final extras = detalle['costos_extras'] as List<dynamic>;
-    final margenPct = (detalle['margen_pct'] as num).toDouble();
-*/
+
 
     final recetas = (detalle['recetas'] ?? []) as List<dynamic>;
     final extras = (detalle['costos_extras'] ?? []) as List<dynamic>;
@@ -46,13 +42,7 @@ class DetalleCalculoScreen extends StatelessWidget {
             AppSectionCard(
               title: calculo.nombre,
               children: [
-                /*Text(
-                  'Fecha: ${calculo.fecha.toLocal().toString().split(' ')[0]}',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textMuted,
-                  ),
-                ),*/
+                
                 Row(
                   children: [
                       const Icon(

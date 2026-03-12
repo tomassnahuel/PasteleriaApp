@@ -91,21 +91,6 @@ void initState() {
               ],
             ),
             const AppSectionSpacer(),
-            /*AppSectionCard(
-              title: 'Productos',
-              children: [
-                ..._items.map((item) => _ItemPresupuestoCard(
-                      item: item,
-                      onChanged: () => setState(() {}),
-                      onDelete: () => _eliminarItem(item),
-                    )),
-                TextButton.icon(
-                  onPressed: _agregarItem,
-                  icon: const Icon(Icons.add, size: 18),
-                  label: const Text('Agregar producto'),
-                ),
-              ],
-            ),*/
             AppSectionCard(
               title: 'Productos',
               children: [
@@ -114,12 +99,12 @@ void initState() {
                   final item = entry.value;
 
                   return _ItemPresupuestoCard(
-                    key: ValueKey(item), // clave única para este producto
+                    key: ValueKey(item), // Para poder eliminar correctamente
                     item: item,
                     onChanged: () => setState(() {}),
                     onDelete: () {
                       setState(() {
-                        _items.removeAt(index); // elimina el correcto
+                        _items.removeAt(index);
                       });
                     },
                   );
@@ -189,12 +174,14 @@ void initState() {
               ],
             ),
             const SizedBox(height: AppSpacing.lg),
+            /// Generar PDF
             SizedBox(
               height: 52,
               child: ElevatedButton.icon(
                 icon: const Icon(Icons.picture_as_pdf_outlined, size: 20),
                 label: const Text('Generar PDF'),
                 onPressed: () async {
+                  // Validaciones para generar el PDF
                   if (_items.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

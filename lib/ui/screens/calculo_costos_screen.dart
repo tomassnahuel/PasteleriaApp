@@ -44,7 +44,10 @@ class _CalculoCostosScreenState extends State<CalculoCostosScreen> {
     super.dispose();
   }
 
+/// Guarda el cálculo actual en la base de datos
+
   Future<void> _guardarCalculo() async {
+    // no permitir guardar si no hay recetas
     if (_recetasSeleccionadas.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('No hay recetas seleccionadas')),
@@ -53,7 +56,7 @@ class _CalculoCostosScreenState extends State<CalculoCostosScreen> {
     }
 
     final nombreController = TextEditingController();
-
+  // pedir nombre del cálculo
     final confirmar = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
@@ -138,12 +141,15 @@ class _CalculoCostosScreenState extends State<CalculoCostosScreen> {
     );
   }
 
+/// Carga todas las recetas disponibles desde la DB
   Future<void> _cargarRecetas() async {
     final recetas = await _recetaDao.obtenerRecetas();
     setState(() => _todasLasRecetas = recetas);
   }
 
+/// Agrega una receta al cálculo actual
   void _agregarReceta(Receta receta) {
+    // evitar duplicados
     final existe = _recetasSeleccionadas.any((r) => r.receta.id == receta.id);
     if (existe) return;
     setState(() {
@@ -178,6 +184,7 @@ class _CalculoCostosScreenState extends State<CalculoCostosScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          // padding dinámico para que el teclado no tape los inputs
           padding: EdgeInsets.only(
             left: AppSpacing.md,
             right: AppSpacing.md,
@@ -217,73 +224,15 @@ class _CalculoCostosScreenState extends State<CalculoCostosScreen> {
                 ],
               ),
               const AppSectionSpacer(),
-AppSectionCard(
-  title: 'Costos extra',
-  children: [
-    ..._costosExtras.asMap().entries.map((entry) {
-      final index = entry.key;
-      final c = entry.value;
+                AppSectionCard(
+                  title: 'Costos extra',
+                  children: [
+                    ..._costosExtras.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final c = entry.value;
 
-      return Padding(
-        key: ValueKey(c), // clave única para este costo
-        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-        child: Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Concepto',
-                  hintText: 'Ej: Confites',
-                ),
-                onChanged: (v) => c.nombre = v,
-              ),
-            ),
-
-            const SizedBox(width: AppSpacing.sm),
-
-            SizedBox(
-              width: 100,
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Precio',
-                  prefixText: '\$ ',
-                ),
-                onChanged: (v) {
-                  setState(() {
-                    c.precio = double.tryParse(v) ?? 0;
-                  });
-                },
-              ),
-            ),
-
-            IconButton(
-              icon: const Icon(Icons.close, size: 18),
-              color: AppColors.error,
-              onPressed: () {
-                setState(() {
-                  _costosExtras.removeAt(index); // elimina el correcto
-                });
-              },
-            ),
-          ],
-        ),
-      );
-    }),
-
-    TextButton.icon(
-      onPressed: _agregarCostoExtra,
-      icon: const Icon(Icons.add, size: 18),
-      label: const Text('Agregar costo extra'),
-    ),
-  ],
-),
-
-              /*const AppSectionSpacer(),
-              AppSectionCard(
-                title: 'Costos extra',
-                children: [
-                  ..._costosExtras.map((c) => Padding(
+                      return Padding(
+                        key: ValueKey(c), // clave única para este costo
                         padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                         child: Row(
                           children: [
@@ -298,6 +247,7 @@ AppSectionCard(
                             ),
 
                             const SizedBox(width: AppSpacing.sm),
+
                             SizedBox(
                               width: 100,
                               child: TextFormField(
@@ -311,37 +261,37 @@ AppSectionCard(
                                     c.precio = double.tryParse(v) ?? 0;
                                   });
                                 },
-                                
                               ),
-                              
                             ),
-                            IconButton(
-        icon: const Icon(Icons.close, size: 18),
-        color: AppColors.error,
-        onPressed: () {
-          setState(() {
-            _costosExtras.remove(c);
-          });
-        },
-      ),
 
+                            IconButton(
+                              icon: const Icon(Icons.close, size: 18),
+                              color: AppColors.error,
+                              onPressed: () {
+                                setState(() {
+                                  _costosExtras.removeAt(index); // elimina el correcto
+                                });
+                              },
+                            ),
                           ],
                         ),
-                        
-                      )),
-                      
-                  TextButton.icon(
-                    onPressed: _agregarCostoExtra,
-                    icon: const Icon(Icons.add, size: 18),
-                    label: const Text('Agregar costo extra'),
-                  ),
-                ],
-              ),*/
+                      );
+                    }),
+
+                    TextButton.icon(
+                      onPressed: _agregarCostoExtra,
+                      icon: const Icon(Icons.add, size: 18),
+                      label: const Text('Agregar costo extra'),
+                    ),
+                  ],
+                ),
+
               const AppSectionSpacer(),
               AppSectionCard(
                 title: 'Configuración',
                 children: [
                   const SizedBox(height: AppSpacing.md),
+                  // costo de packaging (se sincroniza con la lista de extras)
                   TextFormField(
                     controller: _packagingController,
                     keyboardType: TextInputType.number,
@@ -352,35 +302,26 @@ AppSectionCard(
                       hintText: '0',
                     ),
                     onChanged: (v) {
-  setState(() {
-    final precio = double.tryParse(v) ?? 0;
+                  setState(() {
+                    final precio = double.tryParse(v) ?? 0;
 
-    final index = _costosExtras.indexWhere(
-      (c) => c.nombre.toLowerCase() == 'packaging',
-    );
+                    final index = _costosExtras.indexWhere(
+                      (c) => c.nombre.toLowerCase() == 'packaging',
+                    );
+                    // Verificación de si existe packaging
+                    if (index != -1) {
+                      _costosExtras[index].precio = precio;
+                    } else if (precio > 0) {
+                      _costosExtras.add(
+                        CostoExtra(nombre: 'Packaging', precio: precio),
+                      );
+                    }
+                  });
+                },
 
-    if (index != -1) {
-      _costosExtras[index].precio = precio;
-    } else if (precio > 0) {
-      _costosExtras.add(
-        CostoExtra(nombre: 'Packaging', precio: precio),
-      );
-    }
-  });
-},
-                    /*onChanged: (v) {
-                      setState(() {
-                        final precio = double.tryParse(v) ?? 0;
-                        final existe = _costosExtras.indexWhere((c) => c.nombre == 'Packaging');
-                        if (existe >= 0) {
-                          _costosExtras[existe].precio = precio;
-                        } else {
-                          _costosExtras.add(CostoExtra(nombre: 'Packaging', precio: precio));
-                        }
-                      });
-                    },*/
                   ),
                   const SizedBox(height: AppSpacing.md),
+                  // % de ganancia
                   TextFormField(
                     controller: _margenController,
                     keyboardType: TextInputType.number,
@@ -481,14 +422,7 @@ class _RecetaSeleccionadaTile extends StatelessWidget {
         color: AppColors.textMuted,
       ),
     ),
-            /*Text(
-              '\$${rs.costoTotal.toStringAsFixed(2)}',
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
-              ),
-              textAlign: TextAlign.right,
-            ),*/
+            
           ),
           IconButton(
             icon: const Icon(Icons.close, size: 18),

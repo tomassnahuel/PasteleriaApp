@@ -54,7 +54,7 @@ class RecetaInsumo {
   }) : unidadReceta = unidadReceta ?? insumo.unidad;
 
   double costo() {
-// Convertision a unidad base del insumo. REVISAR
+// Convert a unidad base del insumo. REVISAR
   double factor = _factorConversion(unidadReceta, insumo.unidad);
   return insumo.precioUnitario * cantidad * factor;
   }
@@ -65,7 +65,6 @@ class RecetaInsumo {
     if (from == 'g' && to == 'kg') return 0.001;
     if (from == 'Litro' && to == 'ml') return 1000.0;
     if (from == 'ml' && to == 'Litro') return 0.001;
-    // Agregar más conversiones si es necesario
     return 1;
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// Paleta pastel cálida para aplicación de pastelería.
-/// Reduce carga cognitiva y transmite profesionalismo accesible.
+/// Colores globales; Paleta pastel cálida.
+/// 
 class AppColors {
   AppColors._();
 
@@ -29,7 +29,7 @@ class AppColors {
   static const Color textSecondary = Color(0xFF7A6A65);
   static const Color textMuted = Color(0xFFA89A95);
 
-  // Estados
+  // Estados de interfaz
   static const Color success = Color(0xFF8ECFA3);
   static const Color error = Color(0xFFE57373);
   static const Color warning = Color(0xFFF3B562);
@@ -47,7 +47,8 @@ class AppSpacing {
   static const double xxl = 48;
 }
 
-/// Tema de la aplicación - estética pastel profesional.
+/// Tema de la aplicación - estética pastel.
+/// 
 class AppTheme {
   AppTheme._();
 
@@ -55,6 +56,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       fontFamily: 'Poppins',
+      // Colores principal de Material
       colorScheme: ColorScheme.light(
         primary: AppColors.primary,
         onPrimary: Colors.white,
@@ -65,7 +67,9 @@ class AppTheme {
         error: AppColors.error,
         onError: Colors.white,
       ),
-      scaffoldBackgroundColor: const Color(0xFFE1A3FD),
+      scaffoldBackgroundColor: const Color(0xFFFFF7F4),
+
+      // Estilo de appbar
       appBarTheme: const AppBarTheme(
         elevation: 0,
         centerTitle: true,
@@ -78,6 +82,8 @@ class AppTheme {
           color: AppColors.textPrimary,
         ),
       ),
+
+      // Estilo de tarjetas
       cardTheme: CardThemeData(
         elevation: 0,
         color: AppColors.surface,
@@ -87,6 +93,8 @@ class AppTheme {
         margin: EdgeInsets.zero,
         clipBehavior: Clip.antiAlias,
       ),
+
+      // Botones principales
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
@@ -103,6 +111,8 @@ class AppTheme {
           ),
         ),
       ),
+
+      // Botones secundarios
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppColors.primary,
@@ -112,6 +122,8 @@ class AppTheme {
           ),
         ),
       ),
+      
+      // Estilo global de inputs
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.surface,

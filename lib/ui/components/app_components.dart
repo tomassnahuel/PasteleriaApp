@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 /// Tarjeta de menú con icono, título y flecha.
-/// Áreas de toque amplias para uso diario rápido.
+/// 
 class AppMenuCard extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -63,8 +63,7 @@ class AppMenuCard extends StatelessWidget {
   }
 }
 
-/// Tarjeta de sección con título y contenido.
-/// Agrupa visualmente bloques relacionados.
+/// Tarjeta de sección con título y contenido; Agrupa visualmente bloques relacionados.
 class AppSectionCard extends StatelessWidget {
   final String title;
   final List<Widget> children;
@@ -156,7 +155,7 @@ class AppSummaryRow extends StatelessWidget {
 }
 
 /// Estado vacío con icono y mensaje.
-/// Reduce confusión cuando no hay datos.
+
 class AppEmptyState extends StatelessWidget {
   final IconData icon;
   final String message;
@@ -208,7 +207,7 @@ class AppEmptyState extends StatelessWidget {
   }
 }
 
-/// Espaciado consistente entre secciones.
+/// Espaciado entre secciones.
 class AppSectionSpacer extends StatelessWidget {
   const AppSectionSpacer({super.key});
 
