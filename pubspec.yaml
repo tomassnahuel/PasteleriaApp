@@ -1,5 +1,5 @@
-name: presupuestoapp
-description: "A new Flutter project."
+name: hemacostos
+description: "App para pastelerías: gestioná insumos y recetas, calculá costos y generá presupuestos en PDF."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -42,10 +42,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.4.0
-
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -57,15 +55,20 @@ dev_dependencies:
 
 flutter_launcher_icons:
   android: true
-  ios: false
-  image_path: "assets/images/logo_cupcake.png"
+  ios: true
+  remove_alpha_ios: true
+  image_path_android: "assets/images/hemacostos_logo.png"
+  image_path_ios: "assets/images/hemacostos_logo.png"
+  
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: "assets/images/hemacostos_logo.png"
 
 flutter_native_splash:
   color: "#FFFFFF"
-  image: assets/images/logo_cupcake.png
+  image: assets/images/hemacostos_logo.png
 
   android_12:
-    image: assets/images/logo_cupcake.png
+    image: assets/images/hemacostos_logo.png
     color: "#FFFFFF"
     
 # For information on the generic Dart part of this file, see the
@@ -78,12 +81,12 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-
   assets:
     - assets/fonts/Poppins-Regular.ttf
     - assets/fonts/Poppins-Bold.ttf
     - assets/images/logo_cupcake.png
     - assets/images/cupcake_watermark.png
+    - assets/images/hemacostos_logo.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

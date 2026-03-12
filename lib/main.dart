@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Presupuesto Pastelería',
+      title: 'HeMa Costos',
       theme: AppTheme.lightTheme,
       home: const HomeScreen(),
     );

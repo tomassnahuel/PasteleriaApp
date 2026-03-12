@@ -1,4 +1,4 @@
-package com.example.presupuestoapp
+package com.hema.costos
 
 import io.flutter.embedding.android.FlutterActivity
 

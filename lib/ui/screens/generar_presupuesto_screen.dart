@@ -12,7 +12,7 @@ class GenerarPresupuestoScreen extends StatefulWidget {
   @override
   State<GenerarPresupuestoScreen> createState() =>
       _GenerarPresupuestoScreenState();
-}
+} 
 
 class _GenerarPresupuestoScreenState extends State<GenerarPresupuestoScreen> {
   final _clienteController = TextEditingController();

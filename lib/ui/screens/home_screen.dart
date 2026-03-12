@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:presupuestoapp/ui/components/app_components.dart';
-import 'package:presupuestoapp/ui/screens/calculo_costos_screen.dart';
-import 'package:presupuestoapp/ui/screens/generar_presupuesto_screen.dart';
-import 'package:presupuestoapp/ui/screens/historial_calculos_screen.dart';
-import 'package:presupuestoapp/ui/screens/insumos_screen.dart';
-import 'package:presupuestoapp/ui/screens/recetas_screen.dart';
-import 'package:presupuestoapp/ui/theme/app_theme.dart';
+import 'package:hemacostos/ui/components/app_components.dart';
+import 'package:hemacostos/ui/screens/calculo_costos_screen.dart';
+import 'package:hemacostos/ui/screens/generar_presupuesto_screen.dart';
+import 'package:hemacostos/ui/screens/historial_calculos_screen.dart';
+import 'package:hemacostos/ui/screens/insumos_screen.dart';
+import 'package:hemacostos/ui/screens/recetas_screen.dart';
+import 'package:hemacostos/ui/theme/app_theme.dart';
 
 /// Pantalla principal ; Jerarquia visual 
 class HomeScreen extends StatelessWidget {
@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         elevation: 0,
-        title: const Text("Costos de Pastelería"),
+        title: const Text("HeMa Costos 🧁"),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),

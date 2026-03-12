@@ -1,6 +1,6 @@
 {
-    "name": "presupuestoapp",
-    "short_name": "presupuestoapp",
+    "name": "HeMa Costos",
+    "short_name": "HeMa Costos",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

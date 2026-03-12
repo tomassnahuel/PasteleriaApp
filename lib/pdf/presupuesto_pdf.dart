@@ -1,7 +1,7 @@
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:presupuestoapp/data/models/item_presupuesto.dart';
+import 'package:hemacostos/data/models/item_presupuesto.dart';
 
 class PresupuestoPdf {
   // Colores base
@@ -55,12 +55,21 @@ final fontBold = pw.Font.ttf(fontBoldData);
               // WATERMARK
               // ======================
               pw.Positioned.fill(
-                child: pw.Opacity(
+                /*child: pw.Opacity(
                   opacity: 0.06,
                   child: pw.Center(
                     child: pw.Image(watermark, width: 320),
                   ),
+                ),*/
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                child: pw.Opacity(
+                  opacity: 0.06,
+                  child: pw.Image (watermark, fit: pw.BoxFit.cover,),
                 ),
+
               ),
 
               // ======================
