@@ -1,10 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 
+import '../../data/database/presupuesto_guardado_dao.dart';
 import '../../data/models/item_presupuesto.dart';
+import '../../data/models/presupuesto_guardado.dart';
 import '../../pdf/presupuesto_pdf.dart';
 import '../components/app_components.dart';
 import '../theme/app_theme.dart';
+import 'historial_presupuesto_screen.dart';
 
 class GenerarPresupuestoScreen extends StatefulWidget {
   const GenerarPresupuestoScreen({super.key});
@@ -15,11 +22,12 @@ class GenerarPresupuestoScreen extends StatefulWidget {
 } 
 
 class _GenerarPresupuestoScreenState extends State<GenerarPresupuestoScreen> {
+  final _presupuestoDao = PresupuestoGuardadoDao();
   final _clienteController = TextEditingController();
 
   final _mensaje1Controller = TextEditingController(
     text:
-        'Gracias por ponerse en contacto con Mi Pastelería y considerar nuestros servicios para su próximo evento. Nos complace presentarle la siguiente cotización.',
+        'Gracias por ponerse en contacto con nosotros y considerar nuestros servicios para su próximo evento. Nos complace presentarle la siguiente cotización.',
   );
 
   final _mensaje2Controller = TextEditingController(
@@ -41,12 +49,14 @@ class _GenerarPresupuestoScreenState extends State<GenerarPresupuestoScreen> {
     return _items.fold(0, (sum, item) => sum + item.subtotal);
   }
 
-  void _agregarItem() {
-    setState(() => _items.add(ItemPresupuesto()));
+  String _sanitizeFileName(String input) {
+    final withoutSpaces = input.trim().replaceAll(' ', '_');
+    final safe = withoutSpaces.replaceAll(RegExp(r'[^a-zA-Z0-9_\-]'), '');
+    return safe.isEmpty ? 'presupuesto' : safe;
   }
 
-  void _eliminarItem(ItemPresupuesto item) {
-    setState(() => _items.remove(item));
+  void _agregarItem() {
+    setState(() => _items.add(ItemPresupuesto()));
   }
 
   @override
@@ -206,18 +216,94 @@ void initState() {
                     );
                     return;
                   }
+                  final ahora = DateTime.now();
+
                   final pdf = await PresupuestoPdf.generar(
                     negocio: _nombreNegocioController.text,
                     telefono: _telefonoController.text,
                     cliente: _clienteController.text,
-                    fecha: DateTime.now(),
+                    fecha: ahora,
                     items: _items,
                     mensaje1: _mensaje1Controller.text,
                     mensaje2: _mensaje2Controller.text,
                   );
 
-                  await Printing.layoutPdf(
-                    onLayout: (format) async => pdf.save(),
+                  final bytes = await pdf.save();
+
+                  // Guardar archivo físicamente
+                  final dir = await getApplicationDocumentsDirectory();
+                  final folder = Directory(p.join(dir.path, 'presupuestos'));
+                  if (!await folder.exists()) {
+                    await folder.create(recursive: true);
+                  }
+
+                  final fechaStr =
+                      '${ahora.year.toString().padLeft(4, '0')}-${ahora.month.toString().padLeft(2, '0')}-${ahora.day.toString().padLeft(2, '0')}';
+                  final clienteSafe = _sanitizeFileName(_clienteController.text);
+                  final fileName = '$fechaStr\_$clienteSafe.pdf';
+                  final filePath = p.join(folder.path, fileName);
+                  final file = File(filePath);
+                  await file.writeAsBytes(bytes, flush: true);
+
+                  // Guardar registro en base de datos
+                  final presupuesto = PresupuestoGuardado(
+                    cliente: _clienteController.text.trim(),
+                    negocio: _nombreNegocioController.text.trim(),
+                    telefono: _telefonoController.text.trim().isEmpty
+                        ? null
+                        : _telefonoController.text.trim(),
+                    fecha: ahora,
+                    total: _total,
+                    filePath: filePath,
+                  );
+
+                  await _presupuestoDao.insertar(presupuesto);
+
+                  if (!mounted) return;
+
+                  // Diálogo de confirmación con opciones
+                  await showDialog<void>(
+                    context: context,
+                    builder: (ctx) {
+                      return AlertDialog(
+                        title: const Text('🎉 Presupuesto generado'),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text('Tu PDF está listo para enviar al cliente.'),
+                            SizedBox(height: 16),
+                            Text ('Presupuesto disponible en la sección de historial de presupuestos.',
+                            style: TextStyle(
+                             fontSize: 12,
+                             color: Colors.black54, 
+                            ),
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () async{
+                              Navigator.of(ctx).pop();
+                              await Printing.sharePdf(
+                                bytes: bytes,
+                                filename: fileName,
+                              );
+                            },
+                            child: const Text('Compartir presupuesto'),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              Navigator.of(ctx).pop();
+                              await Printing.layoutPdf(
+                                onLayout: (format) async => bytes,
+                              );
+                            },
+                            child: const Text('Ver PDF'),
+                          ),
+                        ],
+                      );
+                    },
                   );
                 },
               ),

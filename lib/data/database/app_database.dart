@@ -19,8 +19,9 @@ class AppDatabase {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
     );
   }
 
@@ -57,16 +58,45 @@ class AppDatabase {
 
   
     await db.execute('''
-          CREATE TABLE calculos_guardados (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombre TEXT NOT NULL,
-            fecha TEXT NOT NULL,
-            subtotal_recetas REAL NOT NULL,
-            subtotal_extras REAL NOT NULL,
-            margen_pct REAL NOT NULL,
-            precio_final REAL NOT NULL,
-            detalle_json TEXT NOT NULL
-          )
+      CREATE TABLE calculos_guardados (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nombre TEXT NOT NULL,
+        fecha TEXT NOT NULL,
+        subtotal_recetas REAL NOT NULL,
+        subtotal_extras REAL NOT NULL,
+        margen_pct REAL NOT NULL,
+        precio_final REAL NOT NULL,
+        detalle_json TEXT NOT NULL
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE presupuestos_guardados (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        cliente TEXT NOT NULL,
+        negocio TEXT NOT NULL,
+        telefono TEXT,
+        fecha TEXT NOT NULL,
+        total REAL NOT NULL,
+        file_path TEXT NOT NULL
+      )
     ''');
   }
+
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute('''
+        CREATE TABLE presupuestos_guardados (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          cliente TEXT NOT NULL,
+          negocio TEXT NOT NULL,
+          telefono TEXT,
+          fecha TEXT NOT NULL,
+          total REAL NOT NULL,
+          file_path TEXT NOT NULL
+        )
+      ''');
+    }
+  }
 }
+

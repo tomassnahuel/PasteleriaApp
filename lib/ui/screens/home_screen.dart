@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hemacostos/ui/components/app_components.dart';
 import 'package:hemacostos/ui/screens/calculo_costos_screen.dart';
 import 'package:hemacostos/ui/screens/generar_presupuesto_screen.dart';
+import 'package:hemacostos/ui/screens/historial_presupuesto_screen.dart';
 import 'package:hemacostos/ui/screens/historial_calculos_screen.dart';
 import 'package:hemacostos/ui/screens/insumos_screen.dart';
 import 'package:hemacostos/ui/screens/recetas_screen.dart';
@@ -60,6 +61,14 @@ class HomeScreen extends StatelessWidget {
 
             const SizedBox(height: 28),
 
+
+
+          _SectionTitle("Cómo funciona"),
+          const SizedBox(height: 12),
+          _WorkflowRow(),
+
+          const SizedBox(height: 28),
+
             const Text(
               "Gestión",
               style: TextStyle(
@@ -112,12 +121,12 @@ class HomeScreen extends StatelessWidget {
                   onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => HistorialCalculosScreen())),
+                          builder: (_) => const HistorialCalculosScreen())),
                 ),
               ],
             ),
 
-            const SizedBox(height: 28),
+            const SizedBox(height: 1),
 
             const Text(
               "Herramientas",
@@ -140,12 +149,179 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+
+            const SizedBox(height: 12),
+
+            _SecondaryActionCard(
+              title: "Historial de presupuestos",
+              icon: Icons.picture_as_pdf_outlined,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const HistorialPresupuestoScreen(),
+                ),
+              ),
+            ),
+
           ],
         ),
       ),
     );
   }
 }
+
+class _SecondaryActionCard extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _SecondaryActionCard({
+    required this.title,
+    required this.icon,
+    required this.onTap,
+  });
+  
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(18),
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+          color: AppColors.primaryLight,
+          borderRadius: BorderRadius.circular(18),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: 32),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(Icons.arrow_forward_ios, size: 16)
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// WORKFLOW ROW
+class _WorkflowRow extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final steps = <Map<String, dynamic>>[
+      {'icon': Icons.inventory_2_outlined, 'label': 'Insumos'},
+      {'icon': Icons.menu_book_outlined, 'label': 'Recetas'},
+      {'icon': Icons.calculate_outlined, 'label': 'Costos'},
+      {'icon': Icons.picture_as_pdf_outlined, 'label': 'PDF'},
+    ];
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          )
+        ],
+      ),
+      child: Row(
+        children: [
+          for (int i = 0; i < steps.length; i++) ...[
+            Expanded(
+              child: _WorkflowStepTile(
+                icon: steps[i]['icon'] as IconData,
+                label: steps[i]['label'] as String,
+              ),
+            ),
+            if (i < steps.length - 1)
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 2),
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  size: 10,
+                  color: AppColors.textMuted,
+                ),
+              ),
+          ]
+        ],
+      ),
+    );
+  }
+}
+
+
+// WORKFLOW STEP TILE
+class _WorkflowStepTile extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  const _WorkflowStepTile({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 38,
+          height: 38,
+          decoration: BoxDecoration(
+            color: AppColors.primaryLight.withOpacity(0.6),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(icon, size: 18, color: AppColors.primaryDark),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.w500,
+            color: AppColors.textSecondary,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+}
+
+// Section Title
+class _SectionTitle extends StatelessWidget {
+  final String text;
+  const _SectionTitle(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+        color: AppColors.textPrimary,
+        letterSpacing: 0.2,
+      ),
+    );
+  }
+}
+
+
 
 class _MenuCard extends StatelessWidget {
   final String title;
@@ -157,6 +333,7 @@ class _MenuCard extends StatelessWidget {
     required this.icon,
     required this.onTap,
   });
+
 
   @override
   Widget build(BuildContext context) {
@@ -207,6 +384,8 @@ class _PrimaryActionCard extends StatelessWidget {
     required this.icon,
     required this.onTap,
   });
+
+
 
   @override
   Widget build(BuildContext context) {
