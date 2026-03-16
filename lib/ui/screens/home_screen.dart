@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hemacostos/ui/components/app_components.dart';
 import 'package:hemacostos/ui/screens/calculo_costos_screen.dart';
 import 'package:hemacostos/ui/screens/generar_presupuesto_screen.dart';
 import 'package:hemacostos/ui/screens/historial_presupuesto_screen.dart';
@@ -234,7 +233,7 @@ class _WorkflowRow extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: const Offset(0, 2),
           )
@@ -282,7 +281,7 @@ class _WorkflowStepTile extends StatelessWidget {
           width: 38,
           height: 38,
           decoration: BoxDecoration(
-            color: AppColors.primaryLight.withOpacity(0.6),
+            color: AppColors.primaryLight.withValues(alpha: 0.6),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(icon, size: 18, color: AppColors.primaryDark),
@@ -347,7 +346,7 @@ class _MenuCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.04),
+              color: Colors.black.withValues(alpha: 0.04),
               blurRadius: 8,
               offset: const Offset(0, 4),
             )

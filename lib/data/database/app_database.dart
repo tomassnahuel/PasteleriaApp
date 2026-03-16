@@ -78,7 +78,8 @@ class AppDatabase {
         telefono TEXT,
         fecha TEXT NOT NULL,
         total REAL NOT NULL,
-        file_path TEXT NOT NULL
+        file_path TEXT NOT NULL,
+        display_name TEXT NOT NULL
       )
     ''');
   }
@@ -93,7 +94,8 @@ class AppDatabase {
           telefono TEXT,
           fecha TEXT NOT NULL,
           total REAL NOT NULL,
-          file_path TEXT NOT NULL
+          file_path TEXT NOT NULL,
+          display_name TEXT NOT NULL
         )
       ''');
     }

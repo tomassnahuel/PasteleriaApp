@@ -24,8 +24,8 @@ class _CalculoCostosScreenState extends State<CalculoCostosScreen> {
   final CalculoGuardadoDao _calculoDao = CalculoGuardadoDao();
 
   List<Receta> _todasLasRecetas = [];
-  List<RecetaSeleccionada> _recetasSeleccionadas = [];
-  List<CostoExtra> _costosExtras = [];
+  final List<RecetaSeleccionada> _recetasSeleccionadas = [];
+  final List<CostoExtra> _costosExtras = [];
 
   double _margenGanancia = 50;
   final _packagingController = TextEditingController(text: '0');

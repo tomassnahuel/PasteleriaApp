@@ -287,7 +287,7 @@ class _InsumoRecetaTile extends StatelessWidget {
           Expanded(
   flex: 2,
   child: DropdownButtonFormField<String>(
-    value: ri.unidadReceta,
+    initialValue: ri.unidadReceta,
     decoration: const InputDecoration(
       labelText: 'Unid',
       isDense: true,

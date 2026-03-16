@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' as p;
+/*import 'package:path/path.dart' as p;*/
 import 'package:printing/printing.dart';
+import 'package:open_file/open_file.dart';
 
 import '../../data/database/presupuesto_guardado_dao.dart';
 import '../../data/models/presupuesto_guardado.dart';
@@ -74,12 +77,8 @@ class _HistorialPresupuestoScreenState
                       ),
                     );
                     return;
-                  }
-
-                  final bytes = await file.readAsBytes();
-                  await Printing.layoutPdf(
-                    onLayout: (format) async => bytes,
-                  );
+                  };
+                  await OpenFile.open(p.filePath);
                 },
                 onDelete: () async {
                   final confirm = await showDialog<bool>(
@@ -105,11 +104,15 @@ class _HistorialPresupuestoScreenState
                   );
 
                   if (confirm == true) {
-                    final file = File(p.filePath);
-                    if (await file.exists()) {
-                      await file.delete();
+                    try {
+                      final file = File(p.filePath);
+                      if (await file.exists()) {
+                        await file.delete();
+                      }
+                      await _dao.eliminarPresupuesto(p.id!);
+                    } catch (e) {
+                      debugPrint('Error al eliminar presupuesto: $e');
                     }
-                    await _dao.eliminarPresupuesto(p.id!);
                     if (mounted) {
                       setState(() {
                         _futurePresupuestos = _dao.obtenerTodos();
@@ -227,7 +230,7 @@ class _PresupuestoCard extends StatelessWidget {
                             final bytes = await file.readAsBytes();
                             await Printing.sharePdf(
                               bytes: bytes,
-                              filename: p.basename(presupuesto.filePath),
+                              filename: presupuesto.displayName,
                             );
                           },
                         ),

@@ -6,6 +6,7 @@ class PresupuestoGuardado {
   DateTime fecha;
   double total;
   String filePath;
+  String displayName;
 
   PresupuestoGuardado({
     this.id,
@@ -15,6 +16,7 @@ class PresupuestoGuardado {
     required this.fecha,
     required this.total,
     required this.filePath,
+    required this.displayName,
   });
 
   Map<String, dynamic> toMap() {
@@ -26,6 +28,7 @@ class PresupuestoGuardado {
       'fecha': fecha.toIso8601String(),
       'total': total,
       'file_path': filePath,
+      'display_name': displayName,
     };
   }
 
@@ -38,6 +41,7 @@ class PresupuestoGuardado {
       fecha: DateTime.parse(map['fecha'] as String),
       total: (map['total'] as num).toDouble(),
       filePath: map['file_path'] as String,
+      displayName: map['display_name'] as String,
     );
   }
 }
