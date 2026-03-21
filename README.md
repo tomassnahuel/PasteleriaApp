@@ -1,16 +1,123 @@
-# presupuestoapp
+# HeMa Costos 🧁
 
-A new Flutter project.
+![Demo](docs/demo.gif)
 
-## Getting Started
+> **Calculá costos con precisión. Presupuestá en minutos. Vendé con margen.**
 
-This project is a starting point for a Flutter application.
+**HeMa Costos** es una app desarrollada en Flutter para pastelerías y emprendimientos gastronómicos que necesitan **dejar de improvisar precios y empezar a trabajar con números claros**.
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🚀 Qué podés hacer
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- 📦 Registrar insumos con su precio real  
+- 🍰 Crear recetas y obtener su costo automáticamente  
+- 💰 Definir precios con margen de ganancia  
+- 🧾 Generar presupuestos en PDF listos para enviar  
+- 🕓 Guardar historial de cálculos y pedidos  
+
+---
+
+## ⚠️ El problema
+
+En la mayoría de los negocios gastronómicos:
+
+- los precios se calculan “a ojo”  
+- no se contemplan todos los costos  
+- se pierde margen sin saberlo  
+- responder presupuestos lleva demasiado tiempo  
+
+---
+
+## ✅ La solución
+
+HeMa Costos organiza todo el proceso en un flujo simple:
+
+**Insumos → Recetas → Costos → Presupuesto**
+
+Esto permite:
+
+- calcular con precisión  
+- mantener márgenes consistentes  
+- responder más rápido  
+- mejorar la imagen frente al cliente  
+
+---
+
+## 💡 Beneficios directos
+
+- Sabés exactamente cuánto cuesta producir  
+- Evitás vender sin ganancia  
+- Ahorrás tiempo en cada presupuesto  
+- Tenés todo centralizado en una sola app  
+
+---
+
+## 🧠 Cómo funciona
+
+1. Cargás tus insumos  
+2. Armás tus recetas  
+3. Calculás costos + margen  
+4. Generás el presupuesto en PDF  
+
+---
+
+## 📄 Funcionalidades
+
+### 📦 Gestión de insumos
+Registro de materias primas con precio y unidad de medida.
+
+### 🍰 Gestión de recetas
+Cada producto queda asociado a su costo real.
+
+### 💰 Cálculo de costos
+- múltiples recetas  
+- costos extra  
+- packaging  
+- margen configurable  
+- guardado en historial  
+
+### 🧾 Presupuestos en PDF
+- cliente  
+- productos y cantidades  
+- mensaje personalizado  
+- total final  
+
+### 🕓 Historial
+Acceso rápido a cálculos y presupuestos anteriores.
+
+---
+
+## 🎯 Público objetivo
+
+- Pastelerías artesanales  
+- Emprendedoras reposteras  
+- Negocios de tortas personalizadas  
+- Servicios de candy bar  
+- Emprendimientos que venden por pedido  
+
+---
+
+## 🧩 Stack tecnológico
+
+- **Flutter**  
+- **Dart**  
+- **SQLite (`sqflite`)**  
+- **pdf + printing**  
+- **path_provider + open_file**
+
+---
+
+## 🏗 Arquitectura
+
+```text
+lib/
+├── data/
+│   ├── database/
+│   └── models/
+├── logic/
+├── pdf/
+└── ui/
+    ├── components/
+    ├── screens/
+    └── theme/
